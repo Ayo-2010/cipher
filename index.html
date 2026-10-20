@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cipher — A Local Cryptography Workbench</title>
+<meta name="description" content="Encode and decode five classical ciphers, scan Caesar shifts, inspect entropy and letter frequency, and export the result — all in the browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark"><i></i></span>
+      <div>
+        <strong>Cipher</strong>
+        <small>Signals workbench</small>
+      </div>
+    </div>
+    <div class="top-actions">
+      <div class="mode-toggle" id="mode-toggle">
+        <button type="button" data-mode="encode" class="active">Encode</button>
+        <button type="button" data-mode="decode">Decode</button>
+      </div>
+      <button class="outline" id="new-message" type="button">New message</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <p class="eyebrow">Classical cryptography / local only</p>
+      <h1>Break the <em>pattern.</em></h1>
+      <p>Five ciphers, live analysis, and a shift scanner that thinks in English. Nothing leaves this page.</p>
+    </div>
+    <div class="classification">
+      <span>Classified</span>
+      <small>No transmission · local session</small>
+    </div>
+  </section>
+
+  <main class="workspace">
+    <aside class="rail left-rail">
+      <section class="card method-card">
+        <div class="card-head"><span>Cipher method</span><span>01</span></div>
+        <div class="cipher-list" id="cipher-list"></div>
+      </section>
+
+      <section class="card key-card">
+        <div class="card-head"><span>Key material</span><span id="key-state">KEYED</span></div>
+        <div id="key-panel"></div>
+      </section>
+
+      <section class="card sample-card">
+        <div class="card-head"><span>Sample traffic</span><span>3</span></div>
+        <div class="sample-list" id="sample-list"></div>
+      </section>
+    </aside>
+
+    <section class="message-column">
+      <section class="message-card">
+        <div class="card-head"><span>Message</span><span id="message-state">READY</span></div>
+        <div class="io-grid">
+          <div class="io-block">
+            <label for="input-text">Input <span id="input-count">0 chars</span></label>
+            <textarea id="input-text" spellcheck="false" placeholder="Type or paste a message..."></textarea>
+          </div>
+          <div class="io-divider"><span id="direction-label">ENCRYPT →</span></div>
+          <div class="io-block output-block">
+            <label for="output-text">Output <span id="output-count">0 chars</span></label>
+            <textarea id="output-text" spellcheck="false" readonly placeholder="Result appears here..."></textarea>
+          </div>
+        </div>
+        <div class="message-actions">
+          <button id="copy-output" type="button">Copy output</button>
+          <button id="download-output" type="button">Download .txt</button>
+          <button id="chain-output" type="button">Use output</button>
+          <button id="clear-message" type="button">Clear</button>
+        </div>
+      </section>
+
+      <section class="card scan-card">
+        <div class="card-head"><span id="scan-title">Caesar shift scan</span><span id="scan-meta">25 candidates</span></div>
+        <div class="scan-body" id="scan-body"></div>
+      </section>
+    </section>
+
+    <aside class="rail right-rail">
+      <section class="card analysis-card">
+        <div class="card-head"><span>Signal analysis</span><span>Live</span></div>
+        <div class="stat-grid">
+          <div><span>Entropy</span><strong id="stat-entropy">0.00</strong><small>bits / char</small></div>
+          <div><span>Index of coincidence</span><strong id="stat-ioc">0.000</strong><small>letter repeats</small></div>
+          <div><span>Letters</span><strong id="stat-letters">0</strong><small>in output</small></div>
+          <div><span>Unique</span><strong id="stat-unique">0</strong><small>letter forms</small></div>
+        </div>
+        <div class="freq-head"><span>Letter frequency</span><span id="freq-top">—</span></div>
+        <div class="freq-chart" id="freq-chart"></div>
+        <p class="analysis-hint" id="analysis-hint">Waiting for a message.</p>
+      </section>
+
+      <section class="card notes-card">
+        <div class="card-head"><span>Method notes</span><span id="roundtrip-badge">—</span></div>
+        <div id="method-notes"></div>
+      </section>
+    </aside>
+  </main>
+
+  <footer>
+    <span>Cipher / classical ciphers are puzzles, not modern security.</span>
+    <span id="footer-note">Everything stays in your browser.</span>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
